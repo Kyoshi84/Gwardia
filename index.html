@@ -208,6 +208,23 @@
   .article li{margin-bottom:6px;}
   .article h4{font-family:var(--font-display);font-size:15px;letter-spacing:.03em;color:var(--parchment);margin:22px 0 10px;}
 
+  .subnav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:44px;}
+  .subnav button{
+    font-family:var(--font-display);font-size:12.5px;letter-spacing:.08em;
+    padding:10px 20px;border:1px solid var(--line);background:var(--ink-1);color:var(--parchment-dim);
+    cursor:pointer;transition:all .2s ease;
+  }
+  .subnav button.active{background:var(--crimson);border-color:var(--crimson);color:var(--parchment);}
+  .subnav button:hover{color:var(--parchment);}
+  .subpage{display:none;}
+  .subpage.active{display:block;animation:fade .4s ease;}
+
+  .req-grid,.offer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:10px;}
+  .req-grid .card,.offer-grid .card{background:var(--ink-1);padding:26px 24px;}
+  .req-grid .card h4,.offer-grid .card h4{font-family:var(--font-display);font-size:14.5px;letter-spacing:.02em;color:var(--parchment);margin:0 0 10px;}
+  .req-grid .card p,.offer-grid .card p{font-size:14.5px;margin-bottom:0;}
+  .req-grid .card a,.offer-grid .card a{color:var(--gold);}
+
   /* ---------- Galeria ---------- */
   .gallery{
     columns:3 260px;column-gap:3px;
@@ -456,8 +473,14 @@
       <span class="eyebrow">Poradniki</span>
       <h2>Ważne informacje</h2>
       <div class="rule"></div>
-      <p class="lead" style="margin-bottom:10px;">Zanim wyruszysz z Gwardią w pole — kilka artykułów, które pomogą Ci się przygotować: co zabrać, w co się uzbroić i jak dobrać strój.</p>
+      <p class="lead" style="margin-bottom:36px;">Zanim wyruszysz z Gwardią w pole — kilka artykułów, które pomogą Ci się przygotować, oraz komplet informacji dla osób rozważających dołączenie do oddziału.</p>
 
+      <div class="subnav">
+        <button class="active" data-sub="poradniki" onclick="goSub('poradniki')">Poradniki</button>
+        <button data-sub="rekruci" onclick="goSub('rekruci')">Informacje dla rekrutów</button>
+      </div>
+
+      <div class="subpage active" id="sub-poradniki">
       <div class="articles">
 
         <article class="article">
@@ -474,14 +497,14 @@
             <li><strong>Waga i balans:</strong> przy dłuższej broni liczy się wyważenie — zbyt ciężki czubek męczy rękę już po kilku starciach.</li>
             <li><strong>Wykończenie:</strong> lateksowa powłoka w stonowanych, „stalowych” barwach trzyma się lepiej wizualnie niż jaskrawe, plastikowe wykończenia.</li>
           </ul>
-          <p>Nowi rekruci nie muszą kupować miecza od razu — na pierwsze wyjazdy Gwardia pomaga z wypożyczeniem sprzętu. To spora inwestycja, więc lepiej podjąć decyzję świadomie niż w pośpiechu przed pierwszym larpem.</p>
+          <p>Nowi rekruci nie muszą kupować miecza od razu — na pierwsze wyjazdy Gwardia pomaga z wypożyczeniem sprzętu (patrz: zestawy startowe w zakładce „Informacje dla rekrutów”). To spora inwestycja, więc lepiej podjąć decyzję świadomie niż w pośpiechu przed pierwszym larpem.</p>
         </article>
 
         <article class="article">
           <span class="tag">Wygląd</span>
           <h3>Stroje Gwardii — jak zacząć budować swój kostium</h3>
           <p class="meta">Redakcja</p>
-          <p>Mundur Szkarłatnej Gwardii opiera się na prostej, ale rozpoznawalnej kolorystyce: szkarłat z elementami czerni. To baza, od której każdy gwardzista buduje swój indywidualny wygląd — bez względu na to, czy trafia do Pododdziału Szturmowego, Łowców z Drakwaldu, czy do Dworu.</p>
+          <p>Mundur Szkarłatnej Gwardii opiera się na prostej, ale rozpoznawalnej kolorystyce: szkarłat z elementami czerni. To baza, od której każdy gwardzista buduje swój indywidualny wygląd — bez względu na to, czy odgrywa żołnierza z mieczem dwuręcznym, łucznika, czy postać niebojową.</p>
           <h4>Od czego zacząć</h4>
           <ul>
             <li><strong>Kaftan lub dublet</strong> w barwach szkarłatno-czarnych — podstawa stroju, na którą nakłada się resztę elementów.</li>
@@ -489,7 +512,7 @@
             <li><strong>Spodnie lub pumpy</strong> w czerni lub w tej samej tonacji co kaftan, w zależności od roli w oddziale.</li>
             <li><strong>Pas i akcesoria skórzane</strong> — im prostszy start, tym łatwiej dobudowywać kolejne elementy z czasem.</li>
           </ul>
-          <p>Nie trzeba mieć kompletnego stroju na pierwszy wyjazd — wielu gwardzistów zaczynało od jednego elementu (beretu lub kaftana) i rozbudowywało kostium sezon po sezonie. Jeśli szyjecie strój samodzielnie, warto skonsultować krój i barwy z kimś z oddziału, zanim zainwestujecie w materiał — łatwiej trafić w charakter Gwardii, patrząc na to, co już noszą inni.</p>
+          <p>Nie trzeba mieć kompletnego stroju na pierwszy wyjazd — Gwardia wypożycza rekrutom zestaw startowy (spodnie, kaftanik, beret), więc można dołączyć zanim jeszcze skompletuje się własny kostium, i rozbudowywać go sezon po sezonie.</p>
         </article>
 
         <article class="article">
@@ -503,7 +526,7 @@
             <li>Namiot, śpiwór i karimatę dostosowane do pory roku — larpy odbywają się często wczesną wiosną lub jesienią, gdy noce bywają zimne</li>
             <li>Wygodne, rozchodzone buty — kilka dni na nogach w terenie to nie miejsce na nowe obuwie</li>
             <li>Wodę, prowiant na dojazd oraz podstawowe leki, jeśli coś bierzesz na stałe</li>
-            <li>Latarkę lub czołówkę, powerbank, gotówkę na drobne wydatki</li>
+            <li>Latarkę lub czołówkę, powerbank, gotówkę na drobne wydatki (w tym na składkę wyjazdową)</li>
             <li>Dokument tożsamości i ewentualną zgodę/kontakt w razie sytuacji awaryjnej</li>
           </ul>
           <h4>Na co się nastawić</h4>
@@ -511,6 +534,55 @@
         </article>
 
       </div>
+      </div>
+
+      <div class="subpage" id="sub-rekruci">
+
+        <p class="lead">Szkarłatna Gwardia z Carroburga to grupa larpowa odgrywająca elitarny oddział Gwardii Książęcej z miasta Carroburg, osadzona w uniwersum Warhammera. Jednostka jest elitarną formacją podlegającą bezpośrednio Wielkiemu Księciu Carroburga — fabularnie nie podlegamy pod żaden inny oddział. Jesteśmy drużyną szturmową ze wsparciem strzelców.</p>
+        <p>W skład Gwardii wchodzą zarówno gracze odgrywający tradycyjnego dla Carroburga żołnierza z mieczem dwuręcznym, jak i łucznicy. Znajdziesz u nas też postacie kwatermistrzów, muzyków, postacie szlacheckie oraz inne role niebojowe — charakter postaci nie jest z góry narzucony, choć sam oddział ma charakter militarny, ze strukturą wojskową, i warto brać to pod uwagę przy zaciągu. W toku larpów nawiązaliśmy bratnie relacje z oddziałem muszkieterów z Marienburga oraz utrzymujemy dobre stosunki z oddziałami zrzeszonymi pod sztandarem Starowierców.</p>
+
+        <h3 style="margin-top:50px;">Czego oczekujemy</h3>
+        <div class="rule"></div>
+        <div class="req-grid">
+          <div class="card">
+            <h4>Aktywność na grupie FB</h4>
+            <p>Wspólnie podejmujemy decyzje dotyczące losów oddziału, dyskutujemy o stroju i uzbrojeniu oraz ustalamy terminy spotkań — dlatego oczekujemy choćby minimalnej aktywności na grupie.</p>
+          </div>
+          <div class="card">
+            <h4>Brak przynależności do innej grupy imperialnej</h4>
+            <p>Członek Gwardii nie może jednocześnie należeć do innej grupy imperialnej. Nic dodać, nic ująć.</p>
+          </div>
+          <div class="card">
+            <h4>Okolice Warszawy lub gotowość do przyjazdu</h4>
+            <p>Gwardia regularnie spotyka się w Grotece (ul. Otwocka 14, Warszawa) — tam zapadają najważniejsze decyzje organizacyjne, np. plany wyjazdowe. Oczekujemy chęci brania w nich czynnego udziału.</p>
+          </div>
+          <div class="card">
+            <h4>Składki</h4>
+            <p><strong>10 zł/mies.</strong> — nieobowiązkowa, na sprzęt i pakiety startowe dla rekrutów.<br><strong>25 zł</strong> — obowiązkowa składka przy każdym wyjeździe, na siano, drewno, naprawy sprzętu i wymogi larpa.</p>
+          </div>
+        </div>
+
+        <h3 style="margin-top:60px;">Co oferujemy</h3>
+        <div class="rule"></div>
+        <div class="offer-grid">
+          <div class="card"><h4>Dobrą zabawę</h4><p>Zorganizowaliśmy się, by przeżywać niesamowite przygody i dobrze się przy tym bawić — i właśnie tego oczekuj po wyjeździe z nami.</p></div>
+          <div class="card"><h4>Własną siedzibę</h4><p>Siedziba Gwardii mieści się w Grotece przy ul. Otwockiej 14 w Warszawie.</p></div>
+          <div class="card"><h4>Sprzęt obozowy</h4><p>Dysponujemy sprzętem obozowym stylizowanym pod uniwersum Warhammera i podobne imprezy.</p></div>
+          <div class="card"><h4>Biesiady</h4><p>Trzy razy do roku organizujemy czterogodzinne larpowe biesiady — jadło, napitek, szulernia i szczątkowa fabuła do „wkręcenia się”.</p></div>
+          <div class="card"><h4>Treningi</h4><p>Co jakiś czas organizujemy treningi na broń bezpieczną, otwarte również dla osób spoza Gwardii.</p></div>
+          <div class="card"><h4>Zestawy startowe</h4><p>Spodnie, kaftanik zakładany na wzór kimona (dopasowuje się do różnych rozmiarów) i beret — do wypożyczenia za 50 zł. Od rekruta oczekujemy odgrywania roli rekruta i pomocy w obowiązkach obozowych.</p></div>
+          <div class="card"><h4>Największe gry bitewne</h4><p>Nasz plan wyjazdowy obejmuje m.in. Mroczną Knieję, Zweihander: Nim Nadejdą Mrozy oraz Herezję Sigmara.</p></div>
+          <div class="card"><h4>Zniżki w Rekwizytorni</h4><p>10% na Epic Armoury, RFB i Mytholon, 15% na strzały i bełty IDV, 20% na pancerze larpowe i 25% na miecze dwuręczne Epic Armoury. <a href="https://rekwizytornia.com.pl/smartblog/128_Szkar%C5%82atna-Gwardia.html" target="_blank" rel="noopener">Zobacz szczegóły →</a></p></div>
+          <div class="card"><h4>Kontakty z rzemieślnikami</h4><p>Mamy sprawdzone kontakty do najlepszych rzemieślników larpowych.</p></div>
+          <div class="card"><h4>Doświadczenie</h4><p>Na Gwardię składają się gracze z co najmniej kilkuletnim doświadczeniem larpowym — zawsze jest z kim pogadać i kogo zapytać o radę.</p></div>
+        </div>
+
+        <div class="callout" style="margin-top:56px;">
+          <p style="margin-bottom:0;">Zainteresowany dołączeniem? Napisz do nas przez <a href="https://www.facebook.com/Szkar%C5%82atna-Gwardia-z-Carroburga-110589673651254/" target="_blank" rel="noopener">Facebook</a> lub odwiedź zakładkę <a onclick="goPage('kontakt')" style="cursor:pointer;text-decoration:underline;">Kontakt</a>.</p>
+        </div>
+
+      </div>
+
     </div>
   </section>
 </div>
@@ -599,6 +671,11 @@
     navLinks.classList.remove('open');
     window.scrollTo({top:0, behavior:'auto'});
     history.replaceState(null,'','#'+id);
+  }
+
+  function goSub(id){
+    document.querySelectorAll('.subpage').forEach(el=> el.classList.toggle('active', el.id === 'sub-'+id));
+    document.querySelectorAll('.subnav button').forEach(b=> b.classList.toggle('active', b.dataset.sub===id));
   }
 
   navButtons.forEach(b=> b.addEventListener('click', ()=> goPage(b.dataset.page)));
