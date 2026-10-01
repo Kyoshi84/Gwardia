@@ -259,6 +259,26 @@
   /* ---------- Kontakt ---------- */
   .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;}
   @media (max-width:760px){.contact-grid{grid-template-columns:1fr;gap:40px;}}
+
+  .contact-form{display:flex;flex-direction:column;gap:20px;}
+  .contact-form label{
+    font-family:var(--font-display);font-size:12px;letter-spacing:.1em;color:var(--gold);
+    display:block;margin-bottom:8px;
+  }
+  .contact-form select,
+  .contact-form input,
+  .contact-form textarea{
+    width:100%;background:var(--ink-1);border:1px solid var(--line);color:var(--parchment);
+    padding:13px 14px;font-family:var(--font-body);font-size:16px;
+  }
+  .contact-form select{appearance:auto;cursor:pointer;}
+  .contact-form textarea{resize:vertical;min-height:130px;}
+  .contact-form input:focus,
+  .contact-form select:focus,
+  .contact-form textarea:focus{outline:none;border-color:var(--crimson-bright);}
+  .contact-form .hint{font-size:12.5px;color:var(--parchment-dim);margin-top:-10px;}
+  .contact-form button{align-self:flex-start;}
+  .form-note{font-size:13px;color:var(--parchment-dim);margin-top:10px;}
   .field{margin-bottom:24px;}
   .field .k{font-family:var(--font-display);font-size:12px;letter-spacing:.1em;color:var(--gold);display:block;margin-bottom:6px;}
   .field .v{font-size:17px;color:var(--parchment);}
@@ -670,22 +690,35 @@
       <div class="rule"></div>
       <p class="lead">Napisz do nas lub odwiedź naszą stronę na Facebooku — odpowiemy i podpowiemy, jak wygląda pierwszy krok w szeregi Szkarłatnej Gwardii.</p>
 
-      <div class="contact-grid" style="margin-top:40px;">
-        <div>
-          <div class="field">
-            <span class="k">Facebook</span>
-            <span class="v"><a href="https://www.facebook.com/Szkar%C5%82atna-Gwardia-z-Carroburga-110589673651254/" target="_blank" rel="noopener">Szkarłatna Gwardia z Carroburga →</a></span>
+      <div class="field" style="margin-top:34px;">
+        <span class="k">Facebook</span>
+        <span class="v"><a href="https://www.facebook.com/Szkar%C5%82atna-Gwardia-z-Carroburga-110589673651254/" target="_blank" rel="noopener">Szkarłatna Gwardia z Carroburga →</a></span>
+      </div>
+
+      <div class="contact-grid" style="margin-top:36px;">
+        <form class="contact-form" id="contactForm" onsubmit="return sendContactForm(event)">
+          <div>
+            <label for="cf-topic">Temat</label>
+            <select id="cf-topic" required>
+              <option value="Ogólny">Ogólny</option>
+              <option value="Chcę dołączyć">Chcę dołączyć</option>
+              <option value="Opinie">Opinie</option>
+              <option value="Chcę nawiązać współpracę">Chcę nawiązać współpracę</option>
+            </select>
           </div>
-          <div class="field">
-            <span class="k">E-mail</span>
-            <span class="v placeholder">kontakt@szkarlatnagwardia.pl (do uzupełnienia)</span>
+          <div>
+            <label for="cf-email">Adres e-mail *</label>
+            <input type="email" id="cf-email" required placeholder="twoj@email.pl">
           </div>
-          <div class="field">
-            <span class="k">Telefon</span>
-            <span class="v placeholder">do uzupełnienia</span>
+          <div>
+            <label for="cf-message">Wiadomość *</label>
+            <textarea id="cf-message" required placeholder="Napisz kilka słów..."></textarea>
           </div>
-        </div>
-        <div class="callout" style="padding:30px 28px;">
+          <button type="submit" class="btn primary">Wyślij wiadomość</button>
+          <p class="form-note">Formularz otworzy Twój program pocztowy z gotową wiadomością do wysłania na adres Gwardii — nie zbieramy ani nie przechowujemy żadnych danych.</p>
+        </form>
+
+        <div class="callout" style="padding:30px 28px;height:fit-content;">
           <p style="margin-bottom:12px;color:var(--parchment);font-family:var(--font-display);font-size:14px;letter-spacing:.06em;">ZANIM DOŁĄCZYSZ</p>
           <p style="margin-bottom:0;">Nie musisz mieć własnej zbroi ani doświadczenia larpowego — Gwardia przyjmuje rekrutów i uczy ich fachu. Najlepszym pierwszym krokiem jest wiadomość na Facebooku lub pojawienie się na najbliższym spotkaniu otwartym.</p>
         </div>
@@ -718,6 +751,19 @@
     navLinks.classList.remove('open');
     window.scrollTo({top:0, behavior:'auto'});
     history.replaceState(null,'','#'+id);
+  }
+
+  function sendContactForm(e){
+    e.preventDefault();
+    const topic = document.getElementById('cf-topic').value;
+    const email = document.getElementById('cf-email').value.trim();
+    const message = document.getElementById('cf-message').value.trim();
+    if(!email || !message){ return false; }
+    const to = 'unclekyoshi@gmail.com';
+    const subject = 'Formularz kontaktowy — ' + topic;
+    const body = 'Temat: ' + topic + '\nOd: ' + email + '\n\n' + message;
+    window.location.href = 'mailto:' + to + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    return false;
   }
 
   function goSub(id){
