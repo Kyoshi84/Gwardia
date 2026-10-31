@@ -1016,7 +1016,7 @@ const Input = {
       else if (k === 'KeyM') { if (!e.repeat) UI.toggleSound(true); }
       else if (k === 'KeyE' || k === 'KeyB') { if (!e.repeat) this.buildPress = true; }
       else if (k === 'KeyN') { if (!e.repeat) this.nextPress = true; }
-      else if (k === 'Enter') { if (G.state === 'menu') Game.start(); }
+      else if (k === 'Enter') { if (G.state === 'menu' && UI.el.screens.ranking.classList.contains('hidden')) Game.start(); }
       this.keys.add(k);
     });
     window.addEventListener('keyup', e => {
@@ -1093,7 +1093,7 @@ const G = {
   wave: 0, phase: 'build', phaseT: 0, spawnQueue: [], spawnT: 0,
   waveTotal: 0, waveDone: 0, kills: 0, breached: 0, cityHP: CFG.cityHP,
   res: { stone: 0, wood: 0, points: 0 },
-  shake: 0, hitstop: 0, time: 0, endT: -1, endReason: '',
+  shake: 0, hitstop: 0, time: 0, playTime: 0, endT: -1, endReason: '',
   decals: null, decalCtx: null,
 };
 
@@ -1248,7 +1248,7 @@ const Game = {
   reset() {
     G.hero = newHero();
     G.enemies = []; G.particles = []; G.arrows = []; G.floaters = [];
-    G.kills = 0; G.breached = 0; G.cityHP = CFG.cityHP;
+    G.kills = 0; G.breached = 0; G.cityHP = CFG.cityHP; G.playTime = 0;
     G.res = Object.assign({}, CFG.start);
     G.wave = 0; G.phase = 'build'; G.phaseT = CFG.prepFirst; G.spawnQueue = []; G.waveTotal = 0; G.waveDone = 0;
     G.shake = 0; G.hitstop = 0; G.endT = -1; G.endReason = '';
@@ -1277,6 +1277,7 @@ const Game = {
 
 function tick(dt) {
   G.time += dt;
+  G.playTime += dt;
   if (G.hitstop > 0) { G.hitstop -= dt; return; }
   updateHero(dt);
   for (const e of G.enemies) updateEnemy(e, dt);
@@ -2016,7 +2017,7 @@ const UI = {
       phase: $('phase'), next: $('btn-next'),
       banner: $('banner'), bTitle: $('banner-title'), bSub: $('banner-sub'),
       prompt: $('prompt'), toast: $('toast'), tBuild: $('t-build'),
-      screens: { start: $('scr-start'), pause: $('scr-pause'), over: $('scr-over'), win: $('scr-win') },
+      screens: { start: $('scr-start'), pause: $('scr-pause'), over: $('scr-over'), win: $('scr-win'), ranking: $('scr-ranking') },
     };
     // ikony zasobów w HUD
     for (const k of ['stone', 'wood', 'points']) {
@@ -2026,6 +2027,12 @@ const UI = {
     $('btn-restart').addEventListener('click', () => Game.start());
     $('btn-again').addEventListener('click', () => Game.start());
     $('btn-resume').addEventListener('click', () => Game.togglePause());
+    $('btn-ranking').addEventListener('click', () => this.showRanking());
+    $('btn-rank-back').addEventListener('click', () => this.showScreen('start'));
+    $('rank-form').addEventListener('submit', (ev) => { ev.preventDefault(); this.submitScore(); });
+    // pole imienia: klawisze nie sterują grą podczas pisania
+    $('rank-name').addEventListener('keydown', ev => ev.stopPropagation());
+    try { $('rank-name').value = localStorage.getItem('cd-name') || ''; } catch (err) { /* ignoruj */ }
     this.el.next.addEventListener('click', () => { Input.nextPress = true; });
     document.querySelectorAll('.btn-sound').forEach(b => b.addEventListener('click', () => this.toggleSound(false)));
     try { Sfx.muted = localStorage.getItem('cd-muted') === '1'; } catch (err) { /* brak pamięci */ }
@@ -2170,7 +2177,71 @@ const UI = {
     document.getElementById('win-kills').textContent = G.kills;
     document.getElementById('win-breached').textContent = G.breached;
     document.getElementById('win-hp').textContent = Math.ceil(G.hero.hp);
+    document.getElementById('win-time').textContent = window.Ranking ? Ranking.formatTime(G.playTime) : '';
+    this.result = {
+      kills: G.kills, breached: G.breached,
+      hp: Math.max(1, Math.ceil(G.hero.hp)), time_s: Math.round(G.playTime),
+    };
+    this.submitted = null;
+    const form = document.getElementById('rank-form');
+    const ok = window.Ranking && Ranking.enabled;
+    form.hidden = !ok;
+    form.classList.remove('done');
+    document.getElementById('rank-submit').disabled = false;
+    document.getElementById('rank-name').disabled = false;
+    this.rankStatus('');
     this.showScreen('win');
+    this.loadRanking(document.getElementById('win-rank'), null, 10);
+  },
+  rankStatus(text, bad) {
+    const s = document.getElementById('rank-status');
+    s.textContent = text;
+    s.classList.toggle('bad', !!bad);
+  },
+  async loadRanking(el, highlightId, limit) {
+    if (!window.Ranking || !Ranking.enabled) { el.textContent = ''; return null; }
+    el.innerHTML = '<p class="rank-empty">Wczytywanie rankingu…</p>';
+    try {
+      const rows = await Ranking.top(limit);
+      Ranking.renderList(el, rows, highlightId);
+      return rows;
+    } catch (err) {
+      el.innerHTML = '<p class="rank-empty bad">Nie udało się wczytać rankingu. Spróbuj później.</p>';
+      return null;
+    }
+  },
+  showRanking() {
+    this.showScreen('ranking');
+    this.loadRanking(document.getElementById('menu-rank'), null, 20);
+  },
+  async submitScore() {
+    if (!this.result || this.submitted) return;
+    const input = document.getElementById('rank-name');
+    const name = input.value.replace(/\s+/g, ' ').trim();
+    if (!name) { this.rankStatus('Wpisz imię Gwardzisty.', true); input.focus(); return; }
+    const btn = document.getElementById('rank-submit');
+    btn.disabled = true; input.disabled = true;
+    this.rankStatus('Zapisywanie…');
+    try {
+      const row = await Ranking.submit(Object.assign({ name }, this.result));
+      this.submitted = row;
+      try { localStorage.setItem('cd-name', name); } catch (err) { /* ignoruj */ }
+      document.getElementById('rank-form').classList.add('done');
+      const rows = await this.loadRanking(document.getElementById('win-rank'), row && row.id, 10);
+      let msg = 'Zapisano! Twoje imię jest w rankingu.';
+      if (rows && row) {
+        const idx = rows.findIndex(r => r.id === row.id);
+        if (idx >= 0) msg = `Zapisano! Miejsce ${idx + 1} w rankingu.`;
+        else {
+          try { const place = await Ranking.placeOf(row); if (place) msg = `Zapisano! Miejsce ${place} w rankingu.`; } catch (err) { /* bez miejsca */ }
+        }
+      }
+      this.rankStatus(msg);
+    } catch (err) {
+      btn.disabled = false; input.disabled = false;
+      this.rankStatus(err.status === 400 || err.status === 403
+        ? 'Baza odrzuciła ten wynik.' : 'Nie udało się zapisać — sprawdź połączenie i spróbuj ponownie.', true);
+    }
   },
 };
 

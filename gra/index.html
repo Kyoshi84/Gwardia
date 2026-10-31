@@ -76,6 +76,7 @@
         </div>
         <div class="actions">
           <button id="btn-start" class="btn primary">Do broni</button>
+          <button id="btn-ranking" class="btn" type="button">Ranking</button>
           <button class="btn btn-sound" type="button">Dźwięk: wł.</button>
         </div>
       </div>
@@ -113,6 +114,21 @@
       </div>
     </div>
 
+    <!-- Ranking -->
+    <div class="screen hidden" id="scr-ranking">
+      <div class="panel wide">
+        <img class="crest small" src="herb.png" alt="">
+        <span class="eyebrow">Obrońcy, którzy ocalili miasto</span>
+        <h2>Ranking <em>Carroburga</em></h2>
+        <div class="rule"></div>
+        <p class="rank-note">Kolejność: pokonani Skaveni, potem zachowane zdrowie, potem czas obrony.</p>
+        <div id="menu-rank" class="rank-list"></div>
+        <div class="actions">
+          <button id="btn-rank-back" class="btn primary" type="button">Wróć</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Zwycięstwo -->
     <div class="screen hidden" id="scr-win">
       <div class="panel">
@@ -126,7 +142,17 @@
           <div><span>Pokonani Skaveni</span><b id="win-kills">0</b></div>
           <div><span>Przedarło się</span><b id="win-breached">0</b></div>
           <div><span>Pozostałe zdrowie</span><b id="win-hp">0</b></div>
+          <div><span>Czas obrony</span><b id="win-time">0:00</b></div>
         </div>
+        <form id="rank-form" class="rank-form" autocomplete="off">
+          <label for="rank-name">Wpisz się do rankingu</label>
+          <div class="rank-row">
+            <input id="rank-name" name="name" type="text" maxlength="20" placeholder="Imię Gwardzisty" required>
+            <button id="rank-submit" class="btn primary" type="submit">Zapisz</button>
+          </div>
+          <div id="rank-status" class="rank-status" aria-live="polite"></div>
+        </form>
+        <div id="win-rank" class="rank-list"></div>
         <div class="actions">
           <button id="btn-again" class="btn primary">Zagraj ponownie</button>
           <a class="btn" href="../">Wróć na stronę</a>
@@ -145,6 +171,8 @@
     </div>
   </div>
 </div>
+<script src="ranking/config.js"></script>
+<script src="ranking/ranking.js"></script>
 <script src="game.js"></script>
 </body>
 </html>

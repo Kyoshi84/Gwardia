@@ -438,3 +438,89 @@ body.touch #hud-stats { gap: .4em; }
   body.touch .bar.city { width: 2.6em; }
   body.touch #hud { --hud-fs: 10.5px; padding: 6px 6px; }
 }
+
+/* ---------- Ranking ---------- */
+.panel.wide { min-width: min(calc(var(--u) * 200), 94%); }
+.crest.small { width: max(calc(var(--u) * 18), 40px); height: max(calc(var(--u) * 18), 40px); }
+.rank-note { font-size: max(calc(var(--u) * 5), 11px); color: var(--parchment-dim); font-style: italic; margin: 0 0 calc(var(--u) * 3); }
+.rank-form {
+  margin: 0 auto calc(var(--u) * 4);
+  text-align: left;
+  max-width: calc(var(--u) * 150);
+}
+.rank-form label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: max(calc(var(--u) * 4.4), 10px);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: calc(var(--u) * 1.5);
+}
+.rank-row { display: flex; gap: calc(var(--u) * 2); }
+.rank-row input {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-body);
+  font-size: max(calc(var(--u) * 6.2), 16px);  /* 16px: bez auto-zoomu na iPhone */
+  padding: calc(var(--u) * 2) calc(var(--u) * 3);
+  background: var(--ink-0);
+  color: var(--parchment);
+  border: 1px solid var(--line);
+  border-bottom-color: var(--gold);
+  outline: none;
+  user-select: text;
+  -webkit-user-select: text;
+}
+.rank-row input:focus { border-color: var(--gold); }
+.rank-row .btn { padding: calc(var(--u) * 2) calc(var(--u) * 6); }
+.rank-row input:disabled, .rank-row .btn:disabled { opacity: .55; cursor: default; }
+.rank-form.done .rank-row { display: none; }
+.rank-status { min-height: 1.3em; margin-top: calc(var(--u) * 1.5); font-size: max(calc(var(--u) * 5.4), 12px); color: var(--gold); }
+.rank-status.bad { color: #e0575a; }
+
+.rank-list { margin: 0 auto calc(var(--u) * 5); max-height: calc(var(--u) * 80); overflow: auto; }
+.rank-empty { font-size: max(calc(var(--u) * 5.4), 12px); color: var(--parchment-dim); font-style: italic; margin: 0; }
+.rank-empty.bad { color: #e0575a; }
+.rank-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: max(calc(var(--u) * 5.4), 12px);
+}
+.rank-table th {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: .8em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: right;
+  padding: 0 .5em .4em;
+  border-bottom: 1px solid var(--crimson);
+  position: sticky; top: 0; background: var(--ink-1);
+}
+.rank-table td {
+  text-align: right;
+  padding: .3em .5em;
+  border-bottom: 1px solid var(--line);
+  color: var(--parchment);
+  font-variant-numeric: tabular-nums;
+}
+.rank-table .pos { text-align: center; color: var(--parchment-dim); width: 2em; }
+.rank-table .name { text-align: left; max-width: 12em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rank-table tr:nth-child(2) .pos { color: var(--gold); font-weight: 700; }
+.rank-table tr.me td { background: rgba(179, 39, 42, .22); color: #fff; }
+.rank-table tr.me .name { font-weight: 600; }
+
+/* Telefon: ekrany menu, rankingu i końca gry na cały ekran */
+body.touch .screen {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  padding: env(safe-area-inset-top, 0px) 10px env(safe-area-inset-bottom, 0px);
+  background: rgba(14, 11, 9, .94);
+}
+body.touch .panel { max-height: 94vh; width: 100%; --u: 1.9px; padding: 22px 16px; }
+body.touch .panel.small { width: auto; }
+body.touch .rank-list { max-height: 34vh; }
+body.touch:not(.playing) #touch { visibility: hidden; }
