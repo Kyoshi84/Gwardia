@@ -2,10 +2,11 @@
 <html lang="pl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#0e0b09">
 <title>Obrona Carroburga — gra | Szkarłatna Gwardia z Carroburga</title>
-<meta name="description" content="Carroburg Defence — przeglądarkowa gra Szkarłatnej Gwardii. Jako Gwardzista z mieczem dwuręcznym odpieraj hordy Skavenów spod bram Carroburga.">
-<link rel="icon" type="image/png" href="logo.png">
+<meta name="description" content="Obrona Carroburga — przeglądarkowa gra Szkarłatnej Gwardii. Zbieraj kamień i drewno, wznoś mury i wieże łuczników, a mieczem odpieraj hordy Skavenów.">
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -18,40 +19,60 @@
 <div id="wrap">
   <!-- HUD -->
   <div id="hud">
-    <div class="hud-group" id="hud-hero">
-      <span class="lbl">Zdrowie</span>
-      <div class="bar hp"><div id="hp-fill"></div></div>
-      <span id="hp-num" class="num">100</span>
+    <div class="hud-row">
+      <img class="hud-crest" src="herb.png" alt="Herb Carroburga">
+      <div class="hud-group" id="hud-hero">
+        <span class="lbl"><span class="long">Zdrowie</span><span class="short">Zdr.</span></span>
+        <div class="bar hp"><div id="hp-fill"></div></div>
+        <span id="hp-num" class="num">100</span>
+      </div>
+      <div class="hud-group" id="hud-wave">
+        <span id="wave-lbl" class="lbl">Fala 1/10</span>
+        <div class="bar prog"><div id="prog-fill"></div></div>
+      </div>
+      <div class="hud-group" id="hud-stats">
+        <span class="stat" title="Pokonani Skaveni">Ubici <b id="kills">0</b></span>
+        <span class="stat" title="Skaveni, którzy wdarli się do miasta"><span class="long">Przedarło się</span><span class="short">Wdarło</span> <b id="breached">0</b></span>
+        <span class="lbl">Miasto</span>
+        <div class="bar city" title="Wytrzymałość miasta"><div id="city-fill"></div></div>
+      </div>
     </div>
-    <div class="hud-group" id="hud-wave">
-      <span id="wave-lbl" class="lbl">Fala 1/10</span>
-      <div class="bar prog"><div id="prog-fill"></div></div>
-    </div>
-    <div class="hud-group" id="hud-stats">
-      <span class="stat" title="Pokonani Skaveni">Ubici <b id="kills">0</b></span>
-      <span class="stat" title="Skaveni, którzy przedarli się do bramy">Przedarło się <b id="breached">0</b></span>
-      <div class="bar gate" title="Wytrzymałość bramy"><div id="gate-fill"></div></div>
+    <div class="hud-row second">
+      <div class="hud-group res">
+        <span class="res-item" title="Kamień — tnij skały mieczem"><img class="ic-stone" alt=""><span class="long">Kamień</span> <b id="res-stone">0</b></span>
+        <span class="res-item" title="Drewno — tnij drzewa mieczem"><img class="ic-wood" alt=""><span class="long">Drewno</span> <b id="res-wood">0</b></span>
+        <span class="res-item" title="Punkty — za pokonanych Skavenów"><img class="ic-points" alt=""><span class="long">Punkty</span> <b id="res-points">0</b></span>
+      </div>
+      <div class="hud-group">
+        <span id="phase" class="phase"></span>
+        <button id="btn-next" class="btn mini" type="button" hidden>Następna fala <kbd class="only-keys">N</kbd></button>
+      </div>
     </div>
   </div>
 
   <div id="stage">
     <canvas id="game" width="320" height="240"></canvas>
 
+    <div id="prompt"></div>
+    <div id="toast"></div>
     <div id="banner"><div id="banner-title"></div><div id="banner-sub"></div></div>
 
     <!-- Ekran startowy -->
     <div class="screen" id="scr-start">
       <div class="panel">
-        <img class="crest" src="logo.png" alt="Herb Szkarłatnej Gwardii">
+        <img class="crest" src="herb.png" alt="Herb Carroburga">
         <span class="eyebrow">Szkarłatna Gwardia &middot; Carroburg</span>
         <h1>Obrona <em>Carroburga</em></h1>
         <div class="rule"></div>
-        <canvas id="preview" width="120" height="40"></canvas>
-        <p class="lore">Szczuroludzie wypełzli z kanałów i ciągną ku bramom miasta. Stań na drodze z mieczem w dłoni i nie przepuść ani jednego.</p>
-        <div class="controls">
-          <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> lub strzałki — ruch</div>
-          <div><kbd>Spacja</kbd> lub klik myszą — cios mieczem</div>
-          <div><kbd>P</kbd> pauza &middot; <kbd>M</kbd> dźwięk</div>
+        <canvas id="preview" width="132" height="40"></canvas>
+        <p class="lore">Mury Carroburga leżą w gruzach, a szczuroludzie ciągną ku miastu. Tnij skały i drzewa, wznoś mury i wieże łuczników, a mieczem zatrzymuj tych, którzy znajdą wyrwę.</p>
+        <div class="controls only-keys">
+          <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> lub strzałki — ruch &middot; <kbd>Spacja</kbd> lub klik — cios</div>
+          <div><kbd>E</kbd> buduj / napraw &middot; <kbd>N</kbd> następna fala &middot; <kbd>P</kbd> pauza &middot; <kbd>M</kbd> dźwięk</div>
+        </div>
+        <div class="controls only-touch" hidden>
+          <div>Joystick — ruch &middot; <b>Cios</b> — miecz (także w skały i drzewa)</div>
+          <div><b>Buduj</b> przy fundamentach muru lub wieży</div>
         </div>
         <div class="actions">
           <button id="btn-start" class="btn primary">Do broni</button>
@@ -95,6 +116,7 @@
     <!-- Zwycięstwo -->
     <div class="screen hidden" id="scr-win">
       <div class="panel">
+        <img class="crest" src="herb.png" alt="Herb Carroburga">
         <span class="eyebrow">Dziesięć fal odpartych</span>
         <h2>Carroburg <em>ocalony</em></h2>
         <div class="rule"></div>
@@ -110,6 +132,16 @@
           <a class="btn" href="../">Wróć na stronę</a>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Sterowanie dotykowe -->
+  <div id="touch">
+    <div id="joy"><div id="joy-knob"></div></div>
+    <div class="t-btns">
+      <button id="t-pause" class="t-btn small" type="button" aria-label="Pauza">II</button>
+      <button id="t-build" class="t-btn build" type="button">Buduj</button>
+      <button id="t-attack" class="t-btn attack" type="button">Cios</button>
     </div>
   </div>
 </div>
