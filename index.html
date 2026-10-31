@@ -73,6 +73,13 @@
     content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--crimson-bright);
   }
   nav.links button:hover{color:var(--parchment);}
+  nav.links a.nav-game{
+    color:var(--gold);text-decoration:none;
+    font-family:var(--font-display);font-size:13px;letter-spacing:.08em;
+    padding:6px 2px;position:relative;
+  }
+  nav.links a.nav-game:hover{color:var(--parchment);}
+  @media (max-width:860px){ nav.links a.nav-game{text-align:center;} }
   .navToggle{display:none;background:none;border:1px solid var(--line);color:var(--parchment);padding:8px 12px;font-family:var(--font-display);font-size:13px;letter-spacing:.05em;cursor:pointer;}
 
   @media (max-width:860px){
@@ -319,6 +326,7 @@
     <button data-page="informacje">Ważne informacje</button>
     <button data-page="galeria">Galeria</button>
     <button data-page="kontakt">Kontakt</button>
+    <a class="nav-game" href="gra/">Gra</a>
   </nav>
 </header>
 
@@ -332,6 +340,7 @@
       <div class="hero-ctas">
         <a class="btn primary" onclick="goPage('o-nas')">Poznaj Gwardię</a>
         <a class="btn" onclick="goPage('wydarzenia')">Nadchodzące wydarzenia</a>
+        <a class="btn" href="gra/">Zagraj: Obrona Carroburga</a>
       </div>
     </div>
     <div class="hero-next-event">

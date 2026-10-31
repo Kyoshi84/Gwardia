@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Obrona Carroburga — gra | Szkarłatna Gwardia z Carroburga</title>
+<meta name="description" content="Carroburg Defence — przeglądarkowa gra Szkarłatnej Gwardii. Jako Gwardzista z mieczem dwuręcznym odpieraj hordy Skavenów spod bram Carroburga.">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="grain"></div>
+<a class="site-back" href="../">&larr; Szkarłatna Gwardia</a>
+
+<div id="wrap">
+  <!-- HUD -->
+  <div id="hud">
+    <div class="hud-group" id="hud-hero">
+      <span class="lbl">Zdrowie</span>
+      <div class="bar hp"><div id="hp-fill"></div></div>
+      <span id="hp-num" class="num">100</span>
+    </div>
+    <div class="hud-group" id="hud-wave">
+      <span id="wave-lbl" class="lbl">Fala 1/10</span>
+      <div class="bar prog"><div id="prog-fill"></div></div>
+    </div>
+    <div class="hud-group" id="hud-stats">
+      <span class="stat" title="Pokonani Skaveni">Ubici <b id="kills">0</b></span>
+      <span class="stat" title="Skaveni, którzy przedarli się do bramy">Przedarło się <b id="breached">0</b></span>
+      <div class="bar gate" title="Wytrzymałość bramy"><div id="gate-fill"></div></div>
+    </div>
+  </div>
+
+  <div id="stage">
+    <canvas id="game" width="320" height="240"></canvas>
+
+    <div id="banner"><div id="banner-title"></div><div id="banner-sub"></div></div>
+
+    <!-- Ekran startowy -->
+    <div class="screen" id="scr-start">
+      <div class="panel">
+        <img class="crest" src="logo.png" alt="Herb Szkarłatnej Gwardii">
+        <span class="eyebrow">Szkarłatna Gwardia &middot; Carroburg</span>
+        <h1>Obrona <em>Carroburga</em></h1>
+        <div class="rule"></div>
+        <canvas id="preview" width="120" height="40"></canvas>
+        <p class="lore">Szczuroludzie wypełzli z kanałów i ciągną ku bramom miasta. Stań na drodze z mieczem w dłoni i nie przepuść ani jednego.</p>
+        <div class="controls">
+          <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> lub strzałki — ruch</div>
+          <div><kbd>Spacja</kbd> lub klik myszą — cios mieczem</div>
+          <div><kbd>P</kbd> pauza &middot; <kbd>M</kbd> dźwięk</div>
+        </div>
+        <div class="actions">
+          <button id="btn-start" class="btn primary">Do broni</button>
+          <button class="btn btn-sound" type="button">Dźwięk: wł.</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pauza -->
+    <div class="screen hidden" id="scr-pause">
+      <div class="panel small">
+        <span class="eyebrow">Postój</span>
+        <h2>Pauza</h2>
+        <div class="rule"></div>
+        <div class="actions column">
+          <button id="btn-resume" class="btn primary">Wznów walkę</button>
+          <button class="btn btn-sound" type="button">Dźwięk: wł.</button>
+          <a class="btn" href="../">Wróć na stronę</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Over -->
+    <div class="screen hidden" id="scr-over">
+      <div class="panel">
+        <span class="eyebrow">Carroburg upada</span>
+        <h2 id="over-title">Gwardzista poległ</h2>
+        <div class="rule"></div>
+        <div class="stats">
+          <div><span>Osiągnięta fala</span><b id="over-wave">1</b></div>
+          <div><span>Pokonani Skaveni</span><b id="over-kills">0</b></div>
+          <div><span>Przedarło się</span><b id="over-breached">0</b></div>
+        </div>
+        <div class="actions">
+          <button id="btn-restart" class="btn primary">Restart</button>
+          <a class="btn" href="../">Wróć na stronę</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Zwycięstwo -->
+    <div class="screen hidden" id="scr-win">
+      <div class="panel">
+        <span class="eyebrow">Dziesięć fal odpartych</span>
+        <h2>Carroburg <em>ocalony</em></h2>
+        <div class="rule"></div>
+        <p class="lore">Skaveni wycofują się do kanałów. Szkarłatna Gwardia trwa.</p>
+        <div class="motto">Adsumus!</div>
+        <div class="stats">
+          <div><span>Pokonani Skaveni</span><b id="win-kills">0</b></div>
+          <div><span>Przedarło się</span><b id="win-breached">0</b></div>
+          <div><span>Pozostałe zdrowie</span><b id="win-hp">0</b></div>
+        </div>
+        <div class="actions">
+          <button id="btn-again" class="btn primary">Zagraj ponownie</button>
+          <a class="btn" href="../">Wróć na stronę</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="game.js"></script>
+</body>
+</html>
