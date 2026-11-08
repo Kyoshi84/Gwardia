@@ -524,3 +524,25 @@ body.touch .panel { max-height: 94vh; width: 100%; --u: 1.9px; padding: 22px 16p
 body.touch .panel.small { width: auto; }
 body.touch .rank-list { max-height: 34vh; }
 body.touch:not(.playing) #touch { visibility: hidden; }
+
+/* ---------- Buy Me a Coffee (pływający przycisk) ---------- */
+.bmc-float{position:fixed;right:16px;bottom:16px;z-index:30;display:inline-flex;align-items:center;gap:0;
+  height:42px;padding:0 11px;border-radius:21px;text-decoration:none;
+  font-family:'Cinzel','Times New Roman',serif;font-size:13px;letter-spacing:.04em;white-space:nowrap;
+  color:#e9dfc7;background:rgba(23,18,16,.82);border:1px solid #b8923f;
+  opacity:.6;transition:opacity .25s,background .25s,gap .25s,padding .25s;
+  padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box}
+.bmc-float .bmc-ic{display:inline-flex;color:#b8923f}
+.bmc-float .bmc-tx{max-width:0;overflow:hidden;opacity:0;transition:max-width .3s,opacity .25s}
+.bmc-float:hover,.bmc-float:focus-visible{opacity:1;background:#5c1315;gap:8px;padding:0 15px 0 11px}
+.bmc-float:hover .bmc-tx,.bmc-float:focus-visible .bmc-tx{max-width:140px;opacity:1}
+.bmc-float:focus-visible{outline:2px solid #e9dfc7;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.bmc-float,.bmc-float .bmc-tx{transition:none}}
+@media print{.bmc-float{display:none}}
+/* Strona gry: wyraźniejszy w wolnej przestrzeni obok okna gry */
+@media (min-width:1100px){
+  .bmc-float{opacity:.95;gap:8px;padding:0 15px 0 11px;height:46px;border-radius:23px;font-size:14px;bottom:24px;right:24px}
+  .bmc-float .bmc-tx{max-width:140px;opacity:1}
+}
+@media (max-width:1099px){body.playing .bmc-float{opacity:.35}}
+body.touch.playing .bmc-float{display:none}
