@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kontakt i dołączanie do Gwardii | Szkarłatna Gwardia</title>
+<meta name="description" content="Chcesz dołączyć do Szkarłatnej Gwardii z Carroburga lub nawiązać współpracę? Napisz do nas przez formularz kontaktowy lub Facebook.">
+<link rel="canonical" href="https://szkarlatnagwardia.pl/kontakt/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#0e0b09">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/img/herb.webp">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Szkarłatna Gwardia z Carroburga">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:title" content="Kontakt i dołączanie do Gwardii | Szkarłatna Gwardia">
+<meta property="og:description" content="Chcesz dołączyć do Szkarłatnej Gwardii z Carroburga lub nawiązać współpracę? Napisz do nas przez formularz kontaktowy lub Facebook.">
+<meta property="og:url" content="https://szkarlatnagwardia.pl/kontakt/">
+<meta property="og:image" content="https://szkarlatnagwardia.pl/assets/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Chorągiew Carroburga i świece na stole Szkarłatnej Gwardii">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kontakt i dołączanie do Gwardii | Szkarłatna Gwardia">
+<meta name="twitter:description" content="Chcesz dołączyć do Szkarłatnej Gwardii z Carroburga lub nawiązać współpracę? Napisz do nas przez formularz kontaktowy lub Facebook.">
+<meta name="twitter:image" content="https://szkarlatnagwardia.pl/assets/img/og.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Start","item":"https://szkarlatnagwardia.pl/"},{"@type":"ListItem","position":2,"name":"Kontakt i dołączanie do Gwardii","item":"https://szkarlatnagwardia.pl/kontakt/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Przejdź do treści</a>
+<div class="grain"></div>
+
+<header class="topnav" id="topnav">
+  <a class="brand" href="/" aria-label="Szkarłatna Gwardia — strona główna">
+    <img src="/assets/img/herb.webp" width="240" height="240" alt="Herb Szkarłatnej Gwardii">
+    <span>SZKARŁATNA&nbsp;GWARDIA</span>
+  </a>
+  <button class="navToggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">MENU</button>
+  <nav class="links" id="navLinks" aria-label="Główna nawigacja">
+    <a class="nl" href="/">Start</a>
+    <a class="nl" href="/o-nas/">O nas</a>
+    <a class="nl" href="/bohaterowie/">Bohaterowie</a>
+    <a class="nl" href="/wydarzenia/">Wydarzenia</a>
+    <a class="nl" href="/informacje/">Ważne informacje</a>
+    <a class="nl" href="/galeria/">Galeria</a>
+    <a class="nl active" href="/kontakt/" aria-current="page">Kontakt</a>
+    <a class="nav-game" href="/gra/">Gra</a>
+  </nav>
+</header>
+
+<main id="main">
+<div class="page active" id="page-kontakt">
+  <section style="padding-top:calc(env(safe-area-inset-top,0px) + 130px);">
+    <div class="wrap narrow">
+      <span class="eyebrow">Kontakt</span>
+      <h1 class="pt">Chcesz dołączyć do Gwardii?</h1>
+      <div class="rule"></div>
+      <p class="lead">Napisz do nas lub odwiedź naszą stronę na Facebooku — odpowiemy i podpowiemy, jak wygląda pierwszy krok w szeregi Szkarłatnej Gwardii.</p>
+
+      <div class="field" style="margin-top:34px;">
+        <span class="k">Facebook</span>
+        <span class="v"><a href="https://www.facebook.com/Szkar%C5%82atna-Gwardia-z-Carroburga-110589673651254/" target="_blank" rel="noopener">Szkarłatna Gwardia z Carroburga →</a></span>
+      </div>
+
+      <div class="contact-grid" style="margin-top:36px;">
+        <form class="contact-form" id="contactForm" onsubmit="return sendContactForm(event)">
+          <div>
+            <label for="cf-topic">Temat</label>
+            <select id="cf-topic" required>
+              <option value="Ogólny">Ogólny</option>
+              <option value="Chcę dołączyć">Chcę dołączyć</option>
+              <option value="Opinie">Opinie</option>
+              <option value="Chcę nawiązać współpracę">Chcę nawiązać współpracę</option>
+            </select>
+          </div>
+          <div>
+            <label for="cf-email">Adres e-mail *</label>
+            <input type="email" id="cf-email" required placeholder="twoj@email.pl">
+          </div>
+          <div>
+            <label for="cf-message">Wiadomość *</label>
+            <textarea id="cf-message" required placeholder="Napisz kilka słów..."></textarea>
+          </div>
+          <button type="submit" class="btn primary">Wyślij wiadomość</button>
+          <p class="form-note">Formularz otworzy Twój program pocztowy z gotową wiadomością do wysłania na adres Gwardii — nie zbieramy ani nie przechowujemy żadnych danych.</p>
+        </form>
+
+        <div class="callout" style="padding:30px 28px;height:fit-content;">
+          <p style="margin-bottom:12px;color:var(--parchment);font-family:var(--font-display);font-size:14px;letter-spacing:.06em;">ZANIM DOŁĄCZYSZ</p>
+          <p style="margin-bottom:0;">Nie musisz mieć własnej zbroi ani doświadczenia larpowego — Gwardia przyjmuje rekrutów i uczy ich fachu. Najlepszym pierwszym krokiem jest wiadomość na Facebooku lub pojawienie się na najbliższym spotkaniu otwartym.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</main>
+
+
+<footer>
+  <div class="brand" style="cursor:default;">
+    <img src="/assets/img/herb.webp" alt="Herb Gwardii" width="240" height="240" decoding="async">
+  </div>
+  <div class="motto">Adsumus!</div>
+  <div class="copy">© Szkarłatna Gwardia z Carroburga</div>
+</footer>
+
+<script src="/assets/site.js" defer></script>
+<a class="bmc-float" href="https://buymeacoffee.com/unclekyoshi" target="_blank" rel="noopener" aria-label="Postaw kawę — wesprzyj Szkarłatną Gwardię (Buy Me a Coffee)" title="Postaw kawę"><span class="bmc-ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8 3.5c0 1 1 1.2 1 2.2M12 3.5c0 1 1 1.2 1 2.2"/></svg></span><span class="bmc-tx">Postaw kawę</span></a>
+</body>
+</html>
